@@ -1,0 +1,36 @@
+pool:
+  name: Azure Pipelines
+steps:
+- task: charleszipp.azure-pipelines-tasks-terraform.azure-pipelines-tasks-terraform-installer.TerraformInstaller@0
+  displayName: 'Use Terraform latest'
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : init'
+  inputs:
+    backendServiceArm: 'Azure subscription 1 (a20bcda5-ec8b-42db-a8ad-09656ecdc141)'
+    backendAzureRmResourceGroupName: 'vamsikrm-rg'
+    backendAzureRmStorageAccountName: samplestore9pm
+    backendAzureRmContainerName: samplestore9pm
+    backendAzureRmKey: store2
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : plan'
+  inputs:
+    command: plan
+    environmentServiceNameAzureRM: 'Azure subscription 1 (a20bcda5-ec8b-42db-a8ad-09656ecdc141)'
+    backendServiceArm: 'Azure subscription 1 (a20bcda5-ec8b-42db-a8ad-09656ecdc141)'
+    backendAzureRmResourceGroupName: 'vamsikrm-rg'
+    backendAzureRmStorageAccountName: samplestore9pm
+    backendAzureRmContainerName: samplestore9pm
+    backendAzureRmKey: store2
+
+- task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV2@2
+  displayName: 'Terraform : validate and apply'
+  inputs:
+    command: apply
+    environmentServiceNameAzureRM: 'Azure subscription 1 (a20bcda5-ec8b-42db-a8ad-09656ecdc141)'
+    backendServiceArm: 'Azure subscription 1 (a20bcda5-ec8b-42db-a8ad-09656ecdc141)'
+    backendAzureRmResourceGroupName: 'vamsikrm-rg'
+    backendAzureRmStorageAccountName: samplestore9pm
+    backendAzureRmContainerName: samplestore9pm
+    backendAzureRmKey: store2
